@@ -42,7 +42,8 @@ def sintesis_impulso(T_60, bandas, duracion, fs=44100, amplitud=1):
 
     return RI_tot, fs
 
-
+"""
 sintesis, fs = sintesis_impulso([1.877, 1.727, 1.588, 2.176, 2.986, 2.813, 2.161, 1.561, 0.810, 0.454], 'octavas', 6)
 log = convertir_log(sintesis)
 graficar_funcion(len(log)/fs, fs, log, titulo_1='Síntesis de Respuesta al Impulso (Log)')
+"""

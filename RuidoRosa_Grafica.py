@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import winsound
 
 def ruidoRosa_voss(t, ncols=16, fs=44100):
+    
     """
     Genera ruido rosa utilizando el algoritmo de Voss-McCartney(https://www.dsprelated.com/showabstract/3933.php).
     

@@ -63,24 +63,26 @@ def D50(señal, fs=44100):
         
     return 100*D50
 
-data = cargar_audios_por_tipo({"sintesis": ["SintesisRtaImpulso(2).wav"], "RI": ["IR1.wav"]})
-filtro1k = filtro('octavas', data["sintesis"][0][0], data["sintesis"][0][1]) # Sintética
-# filtro1k = filtro('octavas', data["RI"][0][0], data["RI"][0][1]) # Real
-suave = suavizado(filtro1k[5], 10)
-int_sch = integral_schroeder(suave)
+if __name__ == "__main__":
+    
+    data = cargar_audios_por_tipo({"sintesis": ["SintesisRtaImpulso(2).wav"], "RI": ["IR1.wav"]})
+    filtro1k = filtro('octavas', data["sintesis"][0][0], data["sintesis"][0][1]) # Sintética
+    # filtro1k = filtro('octavas', data["RI"][0][0], data["RI"][0][1]) # Real
+    suave = suavizado(filtro1k[5], 10)
+    int_sch = integral_schroeder(suave)
 
-T30 = T_Reverberacion(int_sch, -5, -35)
-T20 = T_Reverberacion(int_sch, -5, -25)
-T10 = T_Reverberacion(int_sch, -5, -15)
-EDT = T_Reverberacion(int_sch, -1, -11)
-C_80 = C80(suave, data["sintesis"][0][1])
-D_50 = D50(suave, data["sintesis"][0][1])
+    T30 = T_Reverberacion(int_sch, -5, -35)
+    T20 = T_Reverberacion(int_sch, -5, -25)
+    T10 = T_Reverberacion(int_sch, -5, -15)
+    EDT = T_Reverberacion(int_sch, -1, -11)
+    C_80 = C80(suave, data["sintesis"][0][1])
+    D_50 = D50(suave, data["sintesis"][0][1])
 
-print("Parámetros de la Respuesta al Impulso para la banda de octava de 1 kHz:")
-print(f"D50: {D_50:.4f}%")
-print(f"C80: {C_80:.4f} dB")
-print("Tiempos de Reverberación:")
-print(f"T30: {T30:.4f} s")
-print(f"T20: {T20:.4f} s")  
-print(f"T10: {T10:.4f} s")
-print(f"EDT: {EDT:.4f} s")
+    print("Parámetros de la Respuesta al Impulso para la banda de octava de 1 kHz:")
+    print(f"D50: {D_50:.4f}%")
+    print(f"C80: {C_80:.4f} dB")
+    print("Tiempos de Reverberación:")
+    print(f"T30: {T30:.4f} s")
+    print(f"T20: {T20:.4f} s")  
+    print(f"T10: {T10:.4f} s")
+    print(f"EDT: {EDT:.4f} s")

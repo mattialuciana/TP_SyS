@@ -43,8 +43,10 @@ def filtro(señal, f1, f2, fs=44100):
 
     return filtro
 
+"""
 data = cargar_audios_por_tipo({
     'grabacion': ['sweep_aula.wav']
 })
 
 filtro_inverso = filtro(data['grabacion'][0][0], 20, 22000, data['grabacion'][0][1])
+"""

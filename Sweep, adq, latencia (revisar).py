@@ -45,12 +45,6 @@ def sweep_filtro(duracion, f1, f2, fs=44100):
 
     return sweep, filtro
 
-
-barrido, filter = sweep_filtro(10, 20, 20000)
-
-fs = 44100
-t = np.arange(0, 10, 1/fs)
-
 def adq_rep(señal, fs=44100, entrada=None, salida=None):
     """
     Función para reproducir y grabar audio al mismo tiempo.
@@ -75,42 +69,46 @@ def adq_rep(señal, fs=44100, entrada=None, salida=None):
     print("Grabación guardada como 'respuesta_grabada.wav'")
     return grabacion
 
+def latencia(recording, barrido, fs=44100):
+    """
+    Estima la latencia entre la grabación y el barrido.
+    
+    Parametros:
+    recording : array
+        Señal grabada.
+    barrido : array
+        Señal del barrido.
+    fs : int
+        Frecuencia de muestreo.
+    
+    returns: float
+        Latencia estimada en segundos.
+    """
+    # Convertir a 1D por si es estéreo
+    recording = recording.flatten()
 
+    # Correlación cruzada para estimar desplazamiento
+    corr = correlate(recording, barrido, mode='full')
+    lag = np.argmax(corr) - len(barrido) - 1 
+    latencia_estimada = lag / fs
+    print(f"Latencia estimada: {latencia_estimada:.4f} segundos")
+    
+    return latencia_estimada
 
-"""
-# Guardar la grabación
-sf.write("respuesta_grabada.wav", recording, fs)
-print("Grabación guardada como 'respuesta_grabada.wav'")
+if __name__ == "__main__":
 
-# Listar todos los dispositivos disponibles
-# devices = sd.query_devices()
-"""
+    # Generar el barrido y el filtro
+    # Duración del barrido en segundos, frecuencia inicial 10 Hz, frecuencia final 20 Hz, frecuencia de muestreo 20000 Hz
+    barrido, filter = sweep_filtro(10, 20, 20000)
 
-fs = 44100
-t = np.arange(0, 10, 1/fs)
-# Reproducir y grabar
-recording = adq_rep(barrido, fs) 
-sd.wait()
-"""
-Según lo que estuvimos investigando, para calcular la latencia entre dos señales primero hay que determinar
-el "lag" en las mismas, este "lag" representa la cantidad de muestras que están desfazadas una de la otra y
-se puede determinar a partir de la realizar una correlación cruzada entre la señal original y la señal 
-grabada, básicamente se trata de comparar las señales entre sí para obtener un valor de correlación que 
-indica que tanto se parecen las señales cuando una de ellas es desplazada en "k" muestras respecto de la 
-otra. Cuando este valor se hace máximo significa que las dos señales están "superpuestas" y el valor de k 
-indica cuanto se tuvo que desplazar la señal grabada para que esto suceda. Si a este valor de "k" le 
-restamos la cantidad de muestras de la señal original obtendríamos el "lag" y a partir de estas y sabiendo 
-la frecuencia de muestreo podríamos obtener la latencia en segundos. Lamentablemente los valores que 
-obtenemos son muy dispersos y no son los que se podría esperar, por lo que hay algo que evidentemente no 
-estamos haciendo bien o no estamos viendo.
-"""
+    fs = 44100
+    t = np.arange(0, 10, 1/fs)
 
-# Convertir a 1D por si es estéreo
-recording = recording.flatten()
+    fs = 44100
+    t = np.arange(0, 10, 1/fs)
+    # Reproducir y grabar
+    recording = adq_rep(barrido, fs) 
+    sd.wait()
 
-# Correlación cruzada para estimar desplazamiento
-corr = correlate(recording, barrido, mode='full')
-lag = np.argmax(corr) - len(barrido) - 1 
-latencia_estimada = lag / fs
-print(f"Latencia estimada: {latencia_estimada:.4f} segundos")
-print(np.argmax(corr)) 
+    # Estimar latencia
+    latencia_estimada = latencia(recording, barrido, fs)

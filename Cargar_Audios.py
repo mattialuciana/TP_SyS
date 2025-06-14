@@ -36,7 +36,8 @@ def cargar_audios_por_tipo(archivos_por_tipo):
 
     return resultado
 
+"""
 data = cargar_audios_por_tipo({
     'respuesta impulso': ['trabajo_practico/TP/ir_centre_stalls.wav', 'trabajo_practico/TP/1st_baptist_nashville_balcony.wav']
 })
-
+"""

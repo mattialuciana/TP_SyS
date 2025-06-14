@@ -1,8 +1,6 @@
 import numpy as np 
 import scipy.signal as signal
-import pandas as pd
 from Cargar_Audios import cargar_audios_por_tipo
-import soundfile as sf
 
 def suavizado(señal, L, fs=44100):
     """
