@@ -64,9 +64,10 @@ def ruidoRosa_voss(t, ncols=16, fs=44100):
     
     return total
 
+"""
 prueba = ruidoRosa_voss(10)
 
-"""
+
 fs = 10000  # frecuencia de muestreo en Hz (CD quality)
 duracion = 5  # duración en segundos 
 
