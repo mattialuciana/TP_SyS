@@ -1,6 +1,6 @@
 import numpy as np 
 import scipy.signal as signal
-from Cargar_Audios import cargar_audios_por_tipo
+from utils.Cargar_Audios import cargar_audios_por_tipo
 
 def suavizado(señal, L, fs=44100):
     """

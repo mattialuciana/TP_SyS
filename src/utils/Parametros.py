@@ -1,11 +1,11 @@
 import numpy as np
-from Int_Schroeder import integral_schroeder, ventana
-from Convertir_Log import convertir_log
-from RuidoRosa_Grafica import graficar_funcion
-from Suavizado import suavizado
-from Cuadrados_min import cuadrados_minimos
-from Cargar_Audios import cargar_audios_por_tipo
-from Filtros import filtro
+from utils.Int_Schroeder import integral_schroeder, ventana
+from utils.Convertir_Log import convertir_log
+from utils.RuidoRosa_Grafica import graficar_funcion
+from utils.Suavizado import suavizado
+from utils.Cuadrados_min import cuadrados_minimos
+from utils.Cargar_Audios import cargar_audios_por_tipo
+from utils.Filtros import filtro
 
 def T_Reverberacion(señal, inicio, final):
 
@@ -23,13 +23,14 @@ def T_Reverberacion(señal, inicio, final):
 
     ventana_señal, start = ventana(señal, inicio, final)
     f, m, b = cuadrados_minimos(ventana_señal)
-    T_xx = -60/m
+    T_xx = (-60-b)/m
 
     return T_xx
 
 def C80(señal, fs=44100):
     """
-    Calcula el C50 de una señal de respuesta al impulso (RI).
+    Calcula el C80 de una señal de respuesta al impulso (RI). Se asume que el impulso comienza en el punto
+    de máxima amplitud.
     Parámetros:
     - señal (numpy array): la señal de respuesta al impulso.
     - fs (int): frecuencia de muestreo de la señal (opcional, por defecto 44100 Hz).
@@ -47,12 +48,13 @@ def C80(señal, fs=44100):
 
 def D50(señal, fs=44100):
     """
-    Calcula el D50 de una señal de respuesta al impulso (RI).
+    Calcula el D50 de una señal de respuesta al impulso (RI). Se asume que el impulso comienza en el punto
+    de máxima amplitud.
     Parámetros:
     - señal (numpy array): la señal de respuesta al impulso.
     - fs (int): frecuencia de muestreo de la señal (opcional, por defecto 44100 Hz).
     Devuelve:
-    - D50 (float): el valor de D50 en dB.
+    - D50 (float): el porcentaje de D50.
     """
     
     T = int(0.05 * fs) 
@@ -66,19 +68,19 @@ def D50(señal, fs=44100):
 if __name__ == "__main__":
     
     data = cargar_audios_por_tipo({"sintesis": ["SintesisRtaImpulso(2).wav"], "RI": ["IR1.wav"]})
-    filtro1k = filtro('octavas', data["sintesis"][0][0], data["sintesis"][0][1]) # Sintética
-    # filtro1k = filtro('octavas', data["RI"][0][0], data["RI"][0][1]) # Real
+    # filtro1k = filtro('octavas', data["sintesis"][0][0], data["sintesis"][0][1]) # Sintética
+    filtro1k = filtro('octavas', data["RI"][0][0], data["RI"][0][1]) # Real
     suave = suavizado(filtro1k[5], 10)
-    int_sch = integral_schroeder(suave)
+    int_sch = integral_schroeder(suave, 6)
 
     T30 = T_Reverberacion(int_sch, -5, -35)
     T20 = T_Reverberacion(int_sch, -5, -25)
     T10 = T_Reverberacion(int_sch, -5, -15)
     EDT = T_Reverberacion(int_sch, -1, -11)
-    C_80 = C80(suave, data["sintesis"][0][1])
-    D_50 = D50(suave, data["sintesis"][0][1])
+    C_80 = C80(suave, data["RI"][0][1])
+    D_50 = D50(suave, data["RI"][0][1])
 
-    print("Parámetros de la Respuesta al Impulso para la banda de octava de 1 kHz:")
+    print("Parámetros para la banda de octava de 1 kHz:")
     print(f"D50: {D_50:.4f}%")
     print(f"C80: {C_80:.4f} dB")
     print("Tiempos de Reverberación:")
