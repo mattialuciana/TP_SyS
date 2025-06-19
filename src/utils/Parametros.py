@@ -1,11 +1,11 @@
 import numpy as np
-from utils.Int_Schroeder import integral_schroeder, ventana
-from utils.Convertir_Log import convertir_log
-from utils.RuidoRosa_Grafica import graficar_funcion
-from utils.Suavizado import suavizado
-from utils.Cuadrados_min import cuadrados_minimos
-from utils.Cargar_Audios import cargar_audios_por_tipo
-from utils.Filtros import filtro
+from Int_Schroeder import integral_schroeder, ventana
+from Convertir_Log import convertir_log
+from RuidoRosa_Grafica import graficar_funcion
+from Suavizado import suavizado
+from Cuadrados_min import cuadrados_minimos
+from Cargar_Audios import cargar_audios_por_tipo
+from Filtros import filtro
 
 def T_Reverberacion(señal, inicio, final):
 

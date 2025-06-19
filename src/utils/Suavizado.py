@@ -1,6 +1,8 @@
 import numpy as np 
-import scipy.signal as signal
-from utils.Cargar_Audios import cargar_audios_por_tipo
+import scipy.signal as signal 
+import matplotlib.pyplot as plt
+from Cargar_Audios import cargar_audios_por_tipo
+from espectro import graficar_espectro_frecuencia
 
 def suavizado(señal, L, fs=44100):
     """
@@ -20,11 +22,12 @@ def suavizado(señal, L, fs=44100):
     
     return suavizada
 
-"""
-data = cargar_audios_por_tipo({
-    'respuestas al impulso': ['SintesisRtaImpulso.wav', 'RI_sweep.wav']
-})
-
-suavizado_ri = suavizado(data['respuestas al impulso'][0][0],  L=100, fs=data['respuestas al impulso'][0][1])
-sf.write("SintesisRtaImpulso_suavizado.wav", suavizado_ri, data['respuestas al impulso'][0][1])
-"""
+if __name__ == "__main__":
+        
+    data = cargar_audios_por_tipo({
+    'respuestas al impulso': ['src\SintesisRtaImpulso(2).wav', 'src\IR1.wav']
+    })
+    suavizado_ri = suavizado(data['respuestas al impulso'][0][0],  L=10, fs=data['respuestas al impulso'][0][1])
+    
+    graficar_espectro_frecuencia(data['respuestas al impulso'][0][0], fs=data['respuestas al impulso'][0][1], titulo='Respuesta al Impulso Original')
+    graficar_espectro_frecuencia(suavizado_ri, fs=data['respuestas al impulso'][0][1], titulo='Suavizado de Respuesta al Impulso')

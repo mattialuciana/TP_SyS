@@ -64,22 +64,6 @@ def ruidoRosa_voss(t, ncols=16, fs=44100):
     
     return total
 
-"""
-prueba = ruidoRosa_voss(10)
-
-
-fs = 10000  # frecuencia de muestreo en Hz (CD quality)
-duracion = 5  # duración en segundos 
-
-    # Generar señal
-long = fs * duracion
-ruido = ruidoRosa_voss(long)
-
-    # Guardar como archivo WAV
-sf.write('ruidoRosa.wav', ruido, fs)
-print("Archivo 'ruidoRosa.wav' guardado con éxito.")
-"""
-
 def graficar_funcion(duracion, fs, signal_1, titulo_1='Señal'):
     """
     Grafica una señal en funcion del tiempo.
@@ -109,7 +93,15 @@ def graficar_funcion(duracion, fs, signal_1, titulo_1='Señal'):
     plt.ylabel("Amplitud")
     plt.show()
 
-# graficar_funcion(10, 44100, prueba, 'Ruido Rosa Voss', titulo_1='Ruido Rosa Voss')
+if __name__ == "__main__":
+    # Generar ruido rosa
+    prueba = ruidoRosa_voss(10, ncols=16, fs=44100)
+    
+    # Graficar la señal generada
+    graficar_funcion(10, 44100, prueba, 'Ruido Rosa Voss')
+    
+    # Reproducir el sonido generado (opcional)
+    winsound.PlaySound("ruidoRosa.wav", winsound.SND_FILENAME)
 
 
 

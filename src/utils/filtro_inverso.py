@@ -4,7 +4,7 @@ import soundfile as sf
 import pandas as pd
 import sounddevice as sd
 from scipy.signal import correlate
-from utils.Cargar_Audios import cargar_audios_por_tipo
+from Cargar_Audios import cargar_audios_por_tipo
 
 def filtro(señal, f1, f2, fs=44100):
     """

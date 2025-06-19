@@ -1,7 +1,7 @@
 import numpy as np
 import soundfile as sf
-from utils.RuidoRosa_Grafica import graficar_funcion
-from utils.Convertir_Log import convertir_log
+from RuidoRosa_Grafica import graficar_funcion
+from Convertir_Log import convertir_log
 
 def sintesis_impulso(T_60, bandas, duracion, fs=44100, amplitud=1):
     """
