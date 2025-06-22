@@ -5,15 +5,13 @@ import numpy as np
 from scipy.io import wavfile
 import soundfile as sf
 
-def respuesta_impulso(path_archivo_filtro, path_archivo_grabacion):
+def respuesta_impulso(filtro, grabacion):
     
     # Leer los audios
-    fs_k, k = wavfile.read(path_archivo_filtro)
-    fs_y, y = wavfile.read(path_archivo_grabacion)
+    k = filtro
+    y = grabacion
 
-    # Asegurar que ambos audios tengan la misma frecuencia de muestreo
-    if fs_k != fs_y:
-        raise ValueError("Las frecuencias de muestreo no coinciden.")
+    fs_k = 44100
 
     # Longitud para convolución lineal
     N = len(k) + len(y) - 1

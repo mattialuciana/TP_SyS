@@ -2,8 +2,21 @@ import numpy as np
 
 def cuadrados_minimos(señal, fs=44100):
     """
-    Ajusta una línea recta a los datos (x, y) usando el método de mínimos cuadrados.
-    Devuelve la pendiente (m) y la intersección (b) de la línea ajustada.
+    Ajusta una línea recta a los datos usando el método de mínimos cuadrados.
+
+    Parámetros:        
+    señal : array
+        Señal a aproximar
+
+    Devuelve:
+    f : 
+        Recta
+    
+    m : float
+        Pendiente
+    
+    b : float
+        Ordenada al origen
     """
     
     t = np.arange(0, len(señal)/fs, 1/fs)

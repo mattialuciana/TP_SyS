@@ -14,13 +14,14 @@ def integral_schroeder(señal, t, fs=44100):
         E: array con el decaimiento de energía acumulada (función de Schroeder)
         t: array de tiempo correspondiente
     """
-    #prueba
+  
     impulso_corto = señal[0:round(t*fs)]
     integral_sch = np.cumsum(impulso_corto[::-1]**2)/np.sum(señal**2)
 
     E = integral_sch[::-1]  # Invertir para que E(t) decrezca
     
     return 10 * np.log10(E)
+    
 
 def ventana(señal, inicio, final):
     
@@ -33,7 +34,7 @@ def ventana(señal, inicio, final):
     Devuelve:
     - data (array): la señal ventaneada.
     - Inicio (int): índice del primer elemento en el rango.
-    - Final (int): índice del último elemento en el rango.  
+     
     """  
 
     
@@ -48,6 +49,7 @@ def ventana(señal, inicio, final):
         if señal[i] <= final:
             Final = i
             break
+
     
 
     return señal[Inicio:Final+1], Inicio
