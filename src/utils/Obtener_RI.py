@@ -7,6 +7,16 @@ import soundfile as sf
 
 def respuesta_impulso(filtro, grabacion):
     
+    """
+    Calcula la respuesta al impulso (RI) de un sistema a partir de un filtro y una grabación.
+    Parámetros:
+    - filtro (numpy array): el filtro utilizado para la convolución. Debe ser el filtro inverso para 
+    el sine sweep original.
+    - grabacion (numpy array): la grabación del sine sweep reproducido en el espacio a estudiar.
+    Devuelve:
+    - h_real (numpy array): la respuesta al impulso normalizada del sistema.
+    """
+
     # Leer los audios
     k = filtro
     y = grabacion
