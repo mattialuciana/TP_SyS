@@ -21,6 +21,10 @@ def cuadrados_minimos(señal, fs=44100):
     
     t = np.arange(0, len(señal)/fs, 1/fs)
     
+    min_length = min(len(t), len(señal))
+    t = t[:min_length]
+    
+    señal = señal[:min_length]
     A = np.sum(t)
     B = np.sum(señal)
     C = np.sum(t**2)

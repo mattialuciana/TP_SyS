@@ -1,5 +1,7 @@
 import numpy as np
 import scipy.signal as signal
+import matplotlib.pyplot as plt
+
 
 def filtro(bandas, señal, fs=44100):
     
@@ -49,3 +51,4 @@ def filtro(bandas, señal, fs=44100):
         lista_filtros.append(filt)
         
     return lista_filtros
+
