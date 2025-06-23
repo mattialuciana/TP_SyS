@@ -1,7 +1,5 @@
 import numpy as np
 import scipy.signal as signal
-import matplotlib.pyplot as plt
-
 
 def filtro(bandas, señal, fs=44100):
     
@@ -14,7 +12,7 @@ def filtro(bandas, señal, fs=44100):
     - fs (int): frecuencia de muestreo en Hz (por defecto 44100).
 
     Devuelve:
-    - señal_filtrada (numpy array): señal filtrada.
+    - lista_filtros (list): lista de señales filtradas.
     """
     
     if bandas == "octavas":

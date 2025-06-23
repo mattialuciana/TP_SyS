@@ -43,4 +43,3 @@ def respuesta_impulso(filtro, grabacion):
     sf.write('respuesta_impulso.wav', h_real, fs_k)
 
     return h_real
-

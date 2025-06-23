@@ -10,7 +10,9 @@ def graficar_espectro_frecuencia(signal, fs, titulo='Espectro de Frecuencia', xl
     - signal (array): señal en el dominio del tiempo.
     - fs (int): frecuencia de muestreo en Hz.
     - titulo (str): título del gráfico.
-    - xlim (tuple): límites del eje x (frecuencia), opcional.
+    - xlim (tupla): límites del eje x (frecuencia), opcional.
+    Devuelve:
+    - None: muestra el gráfico del espectro de frecuencia.
     """
 
     N = len(signal)
