@@ -1,16 +1,15 @@
 import numpy as np
-import os
-import sys
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from utils.Int_Schroeder import integral_schroeder, ventana
-from utils.Convertir_Log import convertir_log
-from utils.RuidoRosa_Grafica import graficar_funcion
-from utils.Suavizado import suavizado
-from utils.Cuadrados_min import cuadrados_minimos
-from utils.Cargar_Audios import cargar_audios_por_tipo
-from utils.Filtros import filtro
+import matplotlib.pyplot as plt
+#import os
+#import sys
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from .Int_Schroeder import integral_schroeder, ventana
+from .Convertir_Log import convertir_log
+from .RuidoRosa_Grafica import graficar_funcion
+from .Suavizado import suavizado
+from .Cuadrados_min import cuadrados_minimos
+from .Cargar_Audios import cargar_audios_por_tipo
+from .Filtros import filtro
 
 def T_Reverberacion(señal, inicio, final):
 
@@ -76,6 +75,7 @@ if __name__ == "__main__":
     # filtro1k = filtro('octavas', data["sintesis"][0][0], data["sintesis"][0][1]) # Sintética
     filtro1k = filtro('octavas', data["RI"][0][0], data["RI"][0][1]) # Real
     suave = suavizado(filtro1k[5], 10)
+    log = convertir_log(suave)
     int_sch = integral_schroeder(suave, 6)
 
     T30 = T_Reverberacion(int_sch, -5, -35)
@@ -87,6 +87,9 @@ if __name__ == "__main__":
     C_80 = C80(suave, data["RI"][0][1]) # Real
     D_50 = D50(suave, data["RI"][0][1]) # Real
 
+    ventana_señal, start = ventana(int_sch, -5, -35)
+    f, m, b = cuadrados_minimos(ventana_señal)
+
     print("Parámetros para la banda de octava de 1 kHz:")
     print(f"D50: {D_50:.4f}%")
     print(f"C80: {C_80:.4f} dB")
@@ -95,3 +98,18 @@ if __name__ == "__main__":
     print(f"T20: {T20:.4f} s")  
     print(f"T10: {T10:.4f} s")
     print(f"EDT: {EDT:.4f} s")
+
+    plt.figure(figsize=(10,6))
+    t = np.arange(0, len(int_sch)/data["RI"][0][1], 1/data["RI"][0][1])
+    t2 = np.arange(0, len(log)/data["RI"][0][1], 1/data["RI"][0][1])
+    t3 = t[start:start + len(ventana_señal)] 
+    plt.plot(t, int_sch, label='Integral de Schroeder', color='brown')
+    plt.plot(t2, log, label='Respuesta al impulso suavizada en escala logaritmica', color='blue')
+    plt.plot(t3, f, label='Ajuste lineal para T30', color='green')
+    plt.title('Integral de Schroeder y Respuesta al impulso suavizada')
+    plt.xlabel('Tiempo (s)')
+    plt.ylabel('Amplitud (dB)')
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+    

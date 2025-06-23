@@ -1,11 +1,11 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+#import os
+#import sys
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import numpy as np
 import soundfile as sf
 import winsound
-from utils.RuidoRosa_Grafica import graficar_funcion
-from utils.Convertir_Log import convertir_log
+from .RuidoRosa_Grafica import graficar_funcion
+from .Convertir_Log import convertir_log
 
 
 def sintesis_impulso(T_60, bandas, duracion, fs=44100, amplitud=1):
@@ -54,4 +54,3 @@ if __name__ == "__main__":
     graficar_funcion(len(log)/fs, fs, log, titulo_1='Síntesis de Respuesta al Impulso (Log)')
 
     winsound.PlaySound("SintesisRtaImpulso1.wav", winsound.SND_FILENAME)
-

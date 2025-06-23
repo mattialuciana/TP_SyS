@@ -1,13 +1,12 @@
 import numpy as np 
 import scipy.signal as signal 
 import matplotlib.pyplot as plt
-import os
-import sys
+#import os
+#import sys
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from utils.Cargar_Audios import cargar_audios_por_tipo
-from utils.espectro import graficar_espectro_frecuencia
+from .Cargar_Audios import cargar_audios_por_tipo
+from .espectro import graficar_espectro_frecuencia
 
 def suavizado(señal, L, fs=44100):
     """
@@ -30,7 +29,7 @@ def suavizado(señal, L, fs=44100):
 if __name__ == "__main__":
         
     data = cargar_audios_por_tipo({
-    'respuestas al impulso': ['src\SintesisIR1.wav', 'src\IR1.wav']
+    'respuestas al impulso': ['src\\SintesisIR1.wav', 'src\\IR1.wav']
     })
     suavizado_ri = suavizado(data['respuestas al impulso'][0][0],  L=10, fs=data['respuestas al impulso'][0][1])
     

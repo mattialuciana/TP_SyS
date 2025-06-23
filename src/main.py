@@ -9,10 +9,6 @@ from utils.Sweep_filtro import sweep_filtro
 from utils.Adq_rep_latencia import adq_rep
 from utils.Obtener_RI import respuesta_impulso
 import sounddevice as sd
-import os
-import sys
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 def Main(titulo=None, banda="octavas", fs=44100):
     
