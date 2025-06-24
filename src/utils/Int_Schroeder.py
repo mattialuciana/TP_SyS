@@ -45,12 +45,10 @@ def ventana(señal, inicio, final):
             Inicio = i
             break
 
-    # Buscar el índice del primer elemento mayor o igual a final_value desde el final del array
+    # Buscar el índice del primer elemento menor o igual a final desde el final del array
     for i in range(len(señal)):
         if señal[i] <= final:
             Final = i
             break
-
-    
 
     return señal[Inicio:Final+1], Inicio
