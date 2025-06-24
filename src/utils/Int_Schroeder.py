@@ -8,19 +8,20 @@ def integral_schroeder(señal, t, fs=44100):
 
     Parámetros:
         señal: array de la respuesta impulsional p(t)
-        fs: frecuencia de muestreo (Hz)
+        t: float, tiempo hasta el cual se calcula la integral (segundos)
+        fs: int, frecuencia de muestreo (Hz). Por defecto 44100 Hz.
 
     Retorna:
         E: array con el decaimiento de energía acumulada (función de Schroeder)
-        t: array de tiempo correspondiente
     """
   
     impulso_corto = señal[0:round(t*fs)]
     integral_sch = np.cumsum(impulso_corto[::-1]**2)/np.sum(señal**2)
 
-    E = integral_sch[::-1]  # Invertir para que E(t) decrezca
+    A = integral_sch[::-1]  # Invertir para que E(t) decrezca
+    E = 10 * np.log10(A)
     
-    return 10 * np.log10(E)
+    return E
     
 
 def ventana(señal, inicio, final):
