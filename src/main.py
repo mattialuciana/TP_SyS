@@ -69,13 +69,13 @@ def Main(titulo=None, banda="octavas", fs=44100):
     D_50 = []
 
     C_80 = []
-
+    
 
     for i in range(len(lista_filtros)): 
         
         PM = suavizado(lista_filtros[i],30) # Transformada de Hilbert y Filtro de promedio movil2
         
-        integral_de_schroeder = integral_schroeder(PM, 6) # Integral de Schroeder
+        integral_de_schroeder = integral_schroeder(PM, len(RI)/fs) # Integral de Schroeder
 
         # integral_ventaneada,I = ventana(integral_de_schroeder,0, -35) # Ventaneo
 
@@ -105,7 +105,7 @@ def Main(titulo=None, banda="octavas", fs=44100):
 
 if __name__ == "__main__":
     
-    IR2 = Main()
+    IR2 = Main("src\\SintesisIR1.wav")
 
     f_centrales= IR2[0]
     EDT = IR2[1]
