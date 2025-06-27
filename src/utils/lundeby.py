@@ -102,7 +102,8 @@ def lundeby(ri, fs, bloque_tiempo=0.03, intervalos=3, max_iter=7):
 
         # Busca la convergencia con una tolerancia de 0.01 segundos de diferencia con el cálculo anterior
         if abs(t_cruce - previo) < 10 ** -2:  
-            # print(f"Iteración {i+1}: convergencia alcanzada.")
+            # print(f"Iteración {i+1}: convergencia alcanzada.") # Está bueno para cuando se ejecuta este 
+            # modulo pero estorba en el main
             break
         previo = t_cruce
     
