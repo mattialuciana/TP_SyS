@@ -8,6 +8,7 @@ from utils.Int_Schroeder import integral_schroeder, ventana
 from utils.Sweep_filtro import sweep_filtro
 from utils.Adq_rep_latencia import adq_rep
 from utils.Obtener_RI import respuesta_impulso
+from utils.lundeby import lundeby
 import sounddevice as sd
 
 def Main(titulo=None, banda="octavas", fs=44100):
@@ -46,7 +47,7 @@ def Main(titulo=None, banda="octavas", fs=44100):
     # Bandas de frecuencias sobre las que se calculan los parámetros acústicos
 
     if banda == "octavas":
-        frec_c = [31.25, 62.5, 125, 250, 500, 1000, 2000, 4000, 8000, 16000]
+        frec_c = [31.5, 63, 125, 250, 500, 1000, 2000, 4000, 8000, 16000]
     elif banda == "tercios":
         frec_c = [25,31.5,40,50,63,80,100,125,160,200,250,315,400,500,630,800,1000,1250,1600,2000,2500,3150,4000,5000,6300,8000,10000,12500,16000,20000]
     
@@ -69,18 +70,16 @@ def Main(titulo=None, banda="octavas", fs=44100):
     D_50 = []
 
     C_80 = []
-
+    
 
     for i in range(len(lista_filtros)): 
         
         PM = suavizado(lista_filtros[i],30) # Transformada de Hilbert y Filtro de promedio movil2
         
-        integral_de_schroeder = integral_schroeder(PM, fs) # Integral de Schroeder
+        lim = lundeby(PM, fs) # Método de Lundeby para determinar el tiempo optimo de la integral de Schroeder
 
-        # integral_ventaneada,I = ventana(integral_de_schroeder,0, -35) # Ventaneo
-
-        # recta, t, a0, a1 = cuadrados_minimos(integral_ventaneada) # Regresión lineal por mínimos cuadrados
-        
+        integral_de_schroeder = integral_schroeder(PM, lim) # Integral de Schroeder
+   
         T_10 = T_Reverberacion(integral_de_schroeder,-5,-15) #Calculo del T60 a partir del T10
         T10.append(T_10)
         

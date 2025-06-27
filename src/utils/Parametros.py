@@ -17,7 +17,7 @@ def T_Reverberacion(señal, inicio, final):
     Calcula el tiempo de reverberación (T_xx) de una señal de respuesta al impulso (RI) utilizando el 
     método de cuadrados mínimos.
     Parámetros:
-    - señal (numpy array): la señal de respuesta al impulso.
+    - señal (numpy array): la integral de Schroeder de la respuesta al impulso.
     - inicio (float): nivel del inicio de la ventana en dB.
     - final (float): nivel del final de la ventana en dB.
     Devuelve:
